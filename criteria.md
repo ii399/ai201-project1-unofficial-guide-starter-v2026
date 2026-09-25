@@ -26,6 +26,8 @@ contains the answer.
 <!-- e.g. "One of my questions is about a topic only two documents mention, so
      I expect that one to be hard." -->
 
+I picked 4 of 5 because the parking permit answer sits in a single sentence in one document, and if that document ever gets split the sentence could be separated from the question it answers.
+
 ---
 
 ## 2. Every answer names a source
@@ -35,6 +37,7 @@ Every answer the system produces names at least one source document.
 **Why this target:**
 <!-- Why all five and not four? What about your setup makes that achievable —
      or what would have to go wrong for it not to be? -->
+All five, because naming a source happens in my prompt in generate.py. It either works for every answer or it is broken for all of them.
 
 ---
 
@@ -52,6 +55,7 @@ in at least 4 of 5 tries.
 **Why this target:**
 <!-- What did your distances look like when you set the cutoff in Milestone 4?
      Was there a clean gap, or did the two groups overlap? -->
+The two groups did not overlap at all. My five in-corpus questions scored 0.178 to 0.456 and the five out-of-corpus ones scored 0.825 to 0.934, leaving a 0.37-wide gap with nothing in it, so a cutoff of 0.6 separates them with margin on both sides. I still said 4 of 5 rather than 5 of 5 because that gap is only this clean while my out-of-corpus questions are about unrelated subjects — a question that sounded like campus life but was not covered would land far closer to the line.
 
 ---
 
@@ -69,10 +73,10 @@ in at least 4 of 5 tries.
        - "No chunk is shorter than 200 characters, since anything below that
           in my corpus turned out to be a heading with no content under it." -->
 
-
+Every chunk is one complete document — 88 documents produce 88 chunks, no chunk contains text from more than one source, and every chunk ends with a full stop, question mark or exclamation mark.
 
 **Why this target:**
-
+My longest document is 549 characters against a chunk size of 800, so nothing splits. For short posts where useful information sits in a single sentence, one post per chunk is what I want, and this is how I would notice if a Milestone 3 change broke it.
 
 
 ---
@@ -87,10 +91,11 @@ in at least 4 of 5 tries.
      present — anything, as long as it names a number or an observable
      outcome. -->
 
+For 5 of 5 questions, every document my system names as a source contains the text its answer relied on — not just one of them.
 
 
 **Why this target:**
-
+Criterion 2 only checks that a source is named, not that it is the right one. A confident answer citing the wrong document is worse than no answer, because a reader has no way to tell.
 
 
 ---
