@@ -1,7 +1,7 @@
 # The Unofficial Guide
 
 <!-- Replace this line with your name and which corpus you picked. -->
-Ime Iyonsi     Corpus: advice_thread
+Ime Iyonsi     Corpus: campus_life
 
 > **This file is your submission.** Fill it in as you go — most sections get
 > written during the milestone that produces them, not at the end.
@@ -28,6 +28,21 @@ Ime Iyonsi     Corpus: advice_thread
      this repo.
 
      Milestone 5. -->
+
+This is a question-answering system over `campus_life`, a corpus of 88 short
+posts written by students about life at a university — dining hall wait times,
+what a particular dorm is actually like, and the administrative rules nobody
+explains properly. You ask it a question in plain English, it finds the posts
+most likely to contain the answer, and it answers using only those posts,
+naming the file it used.
+
+It is built to answer questions with one specific answer sitting in one
+document: when parking permits go on sale, how long you have to change your
+meal plan, how many credit hours graduation takes. It is deliberately bad at
+anything else. A relevance gate measures how close the best retrieved post is
+to your question and refuses outright when nothing is close enough, so asking
+it about diesel engines or the 1994 World Cup returns "I don't have enough
+information about that" rather than a confident guess.
 
 ## Chunking Strategy
 
@@ -193,9 +208,14 @@ not measure one of those, so 0.6 is verified against distant questions only.
 
      Milestone 5. -->
 
-**1.**
+**1.** I wrote five test questions and asked Claude to check them. Claude searched the documents and found out three of the five asked about facts that are not in Campus Life Corpus. There is no credit limit, no club count, and nothing about which meal plan is most popular. I had to rewrite all five from sentences I
+had actually read in the documents, and the “expects” value for each is now a
+word that appears in the file it came from.
 
-**2.**
+
+**2.** I asked Claude for a criterion about my chunks and it gave me "no chunk is
+split mid-sentence." I indexed the corpus and saw that my longest document is 549 characters against a chunk size of 800, so nothing in my corpus splits at all and the criterion could not fail. I rewrote it to state the whole baseline (88 documents producing 88 chunks, one source per chunk, every chunk ending in sentence punctuation) so that it still passes today but would break the moment a milestone 3 change starts splitting documents.
+
 
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
